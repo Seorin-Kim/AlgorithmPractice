@@ -8,12 +8,10 @@
 
 n = int(input())
 sum = 1
-cnt_six = 6
 num_layers = 1
 
 while n > sum:
+    sum = sum + 6 * num_layers
     num_layers += 1
-    sum += cnt_six
-    cnt_six += 6
 
 print(num_layers)
