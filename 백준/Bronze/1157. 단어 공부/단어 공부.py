@@ -1,15 +1,16 @@
 word = list(input().upper())
-letter = {}
-for i in word:
-    if i in list(letter.keys()):
-        letter[i] += 1
-    else:
-        letter[i] = 1
+alpha = {}
 
-key = list(letter.keys())
-num = list(letter.values())
-max_num = max(num)
-if num.count(max_num) > 1:
+for i in word:
+    if i in alpha.keys():
+        alpha[i] += 1
+    else:
+        alpha[i] = 1
+
+keys = list(alpha.keys())
+nums = list(alpha.values())
+max_num = max(nums)
+if nums.count(max_num) > 1:
     print("?")
 else:
-    print(key[num.index(max_num)])
+    print(keys[nums.index(max_num)])
