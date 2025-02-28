@@ -1,4 +1,6 @@
-word = list(input().upper())
+import sys
+
+word = list(sys.stdin.readline().rstrip().upper())
 alpha = {}
 
 for i in word:
