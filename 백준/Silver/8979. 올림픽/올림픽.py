@@ -9,7 +9,7 @@ for i in range(n):
     idx, gold, silver, bronze = input[0], input[1], input[2], input[3]
     results[i] = [idx, gold, silver, bronze]
 
-results.sort(key=lambda x: (x[1], x[2], x[3]))
+results.sort(key=lambda x: (-x[1], -x[2], -x[3]))
 
 rank = 0
 for i in range(n):
