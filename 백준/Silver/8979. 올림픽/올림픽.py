@@ -11,14 +11,18 @@ for i in range(n):
 
 results.sort(key=lambda x: (-x[1], -x[2], -x[3]))
 
-rank = 0
 for i in range(n):
-    if i > 0 and results[i][1] == results[i-1][1] and results[i][2] == results[i-1][2] and results[i][3] == results[i-1][3]:
-        pass
-    else:
-        rank += 1
-    
     if results[i][0] == k:
-        break
-    
+        rank = i + 1
+
+        for j in range(1, i+1):
+            if results[i][1] == results[i-j][1] and results[i][2] == results[i-j][2] and results[i][3] == results[i-j][3]:
+                rank -= 1
+            else:
+                break
+
+
 print(rank)
+
+
+
