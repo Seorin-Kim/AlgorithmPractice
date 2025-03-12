@@ -1,7 +1,9 @@
-n = int(input())
+import sys
+
+n = int(sys.stdin.readline().rstrip())
 ppl = []
 for i in range(n):
-    a = tuple(map(int, input().split()))
+    a = tuple(map(int, sys.stdin.readline().rstrip().split()))
     ppl.append(a)
 
 for i in range(n):
