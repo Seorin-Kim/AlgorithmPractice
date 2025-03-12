@@ -4,9 +4,9 @@ for i in range(n):
     a = tuple(map(int, input().split()))
     ppl.append(a)
 
-for j in range(n):
-    rank = 0
-    for k in range(1, n+1):
-        if ppl[j][0] < ppl[(j+k) % n][0] and ppl[j][1] < ppl[(j+k) % n][1]:
+for i in range(n):
+    rank = 1
+    for j in range(1, n+1):
+        if ppl[i][0] < ppl[(i+j) % n][0] and ppl[i][1] < ppl[(i+j) % n][1]:
             rank += 1
-    print(rank + 1, end=" ")
+    print(rank, end=" ")
