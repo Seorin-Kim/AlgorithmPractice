@@ -8,7 +8,7 @@ for i in range(n):
 
 for i in range(n):
     rank = 1
-    for j in range(1, n+1):
+    for j in range(1, n):
         if ppl[i][0] < ppl[(i+j) % n][0] and ppl[i][1] < ppl[(i+j) % n][1]:
             rank += 1
     print(rank, end=" ")
