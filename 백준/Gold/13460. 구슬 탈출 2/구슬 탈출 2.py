@@ -6,85 +6,96 @@ n, m = map(int, sys.stdin.readline().rstrip().split())
 red = [-1, -1]
 blue = [-1, -1]
 hole = [-1, -1]
-board = []
+board = [[1 for _ in range(m)] for _ in range(n)]
 for i in range(n):
     input = sys.stdin.readline().rstrip()
-    board.append(input)
     for j in range(m):
-        if input[j] == 'B':
+        if input[j] == '#':
+            board[i][j] = 0
+        elif input[j] == 'B':
             blue = [i, j]
         elif input[j] == 'R':
             red = [i, j]
         elif input[j] == 'O':
             hole = [i, j]
 
-# 상(0), 하(1), 좌(2), 우(3)
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
 q = deque()
-q.append((red[0], red[1], blue[0], blue[1], 0))
+q.append((red, blue, 0))
 visited = set()
 visited.add((red[0], red[1], blue[0], blue[1]))
 
+directions = ['up', 'down', 'left', 'right']
 success = False
 while q:
-    rx, ry, bx, by, cnt = q.popleft()
-    if board[rx][ry] == 'O':
+    r, b, cnt = q.popleft()
+    if r == hole:
         success = True
         print(cnt)
         break
     if cnt > 10:
         break
     
-    # 상하좌우 순서대로 시도
-    for k in range(4):
-        # red 움직이기
-        rx_move = rx + dx[k]
-        ry_move = ry + dy[k]
-        r_move = 1
-        while True:
-            if board[rx_move][ry_move] == '#':
-                rx_move -= dx[k]
-                ry_move -= dy[k]
-                break
-            elif board[rx_move][ry_move] == 'O':
-                break
-            rx_move += dx[k]
-            ry_move += dy[k]
-            r_move += 1
-        
-        # blue 움직이기
-        bx_move = bx + dx[k]
-        by_move = by + dy[k]
-        b_move = 1
-        while True:
-            if board[bx_move][by_move] == '#':
-                bx_move -= dx[k]
-                by_move -= dy[k]
-                break
-            elif board[bx_move][by_move] == 'O':
-                break
-            bx_move += dx[k]
-            by_move += dy[k]
-            b_move += 1
+    # 4방향 순서대로 시도
+    for dir in directions:
+        if dir == 'up':
+            drow = -1
+            dcol = 0
+        elif dir == 'down':
+            drow = 1
+            dcol = 0
+        elif dir == 'left':
+            drow = 0
+            dcol = -1
+        else:
+            drow = 0
+            dcol = 1
 
-        # blue가 구멍에 빠지면 해당 방향(상하좌우)은 없던 일로
-        if board[bx_move][by_move] == 'O':
+        # red 움직이기
+        r_move = 0
+        r_tmp = r.copy()
+        while True:
+            r_tmp[0] += drow
+            r_tmp[1] += dcol
+            r_move += 1
+
+            if board[r_tmp[0]][r_tmp[1]] == 0:
+                r_tmp[0] -= drow
+                r_tmp[1] -= dcol
+                break
+            elif r_tmp == hole:
+                break
+
+        # blue 움직이기
+        b_move = 0
+        b_tmp = b.copy()
+        while True:
+            b_tmp[0] += drow
+            b_tmp[1] += dcol
+            b_move += 1
+            
+            if board[b_tmp[0]][b_tmp[1]] == 0:
+                b_tmp[0] -= drow
+                b_tmp[1] -= dcol
+                break
+            elif b_tmp == hole:
+                break
+
+        # blue가 구멍에 빠지면 해당 방향은 없던 일로
+        if b_tmp == hole:
             continue
 
         # red, blue가 같은 칸에서 멈추면, 더 많이 움직인 공을 한 칸 덜 오도록 밀어야 함
-        if rx_move == bx_move and ry_move == by_move:
+        if r_tmp == b_tmp:
             if r_move > b_move:
-                rx_move -= dx[k]
-                ry_move -= dy[k]
+                r_tmp[0] -= drow
+                r_tmp[1] -= dcol
             else:
-                bx_move -= dx[k]
-                by_move -= dy[k]
+                b_tmp[0] -= drow
+                b_tmp[1] -= dcol
 
-        if (rx_move, ry_move, bx_move, by_move) not in visited:
-            visited.add((rx_move, ry_move, bx_move, by_move))
-            q.append((rx_move, ry_move, bx_move, by_move, cnt+1))
+        if (r_tmp[0], r_tmp[1], b_tmp[0], b_tmp[1]) not in visited:
+            visited.add((r_tmp[0], r_tmp[1], b_tmp[0], b_tmp[1]))
+            q.append((r_tmp, b_tmp, cnt+1))
 
 if not success:
     print(-1)
