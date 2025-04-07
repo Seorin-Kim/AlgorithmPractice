@@ -38,17 +38,13 @@ while q:
     # 4방향 순서대로 시도
     for dir in directions:
         if dir == 'up':
-            drow = -1
-            dcol = 0
+            drow, dcol = -1, 0
         elif dir == 'down':
-            drow = 1
-            dcol = 0
+            drow, dcol = 1, 0
         elif dir == 'left':
-            drow = 0
-            dcol = -1
+            drow, dcol = 0, -1
         else:
-            drow = 0
-            dcol = 1
+            drow, dcol = 0, 1
 
         # red 움직이기
         r_move = 0
@@ -57,7 +53,6 @@ while q:
             r_tmp[0] += drow
             r_tmp[1] += dcol
             r_move += 1
-
             if board[r_tmp[0]][r_tmp[1]] == 0:
                 r_tmp[0] -= drow
                 r_tmp[1] -= dcol
@@ -72,7 +67,6 @@ while q:
             b_tmp[0] += drow
             b_tmp[1] += dcol
             b_move += 1
-            
             if board[b_tmp[0]][b_tmp[1]] == 0:
                 b_tmp[0] -= drow
                 b_tmp[1] -= dcol
