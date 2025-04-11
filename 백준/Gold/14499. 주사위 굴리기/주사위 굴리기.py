@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 
 n, m, x, y, k = map(int, sys.stdin.readline().rstrip().split())
 board = []
@@ -53,4 +52,3 @@ for move in moves:
     
     # 윗면 출력
     print(dice[1][1])
-
