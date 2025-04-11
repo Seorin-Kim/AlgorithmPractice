@@ -1,5 +1,4 @@
 import sys
-from collections import deque
 
 n = int(sys.stdin.readline().rstrip())
 t_list = []
