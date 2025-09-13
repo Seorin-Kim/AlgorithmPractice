@@ -4,11 +4,13 @@ def solution(n, computers):
     
     def dfs(idx):
         if visited[idx]:
-            return
+            return False
+        
         visited[idx] = 1
         for i, c in enumerate(computers[idx]):
-            if not visited[i] and c:
+            if i != idx and c and not visited[i]:
                 dfs(i)
+        
         return True
     
     for i in range(n):
