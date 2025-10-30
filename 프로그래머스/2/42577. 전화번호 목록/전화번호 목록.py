@@ -1,17 +1,16 @@
 def solution(phone_book):
-    hash = {}
-    phone_book.sort()
-    for nums in phone_book:
-        if nums[0] not in hash.keys():
-            hash[nums[0]] = [nums]
-        else:
-            hash[nums[0]].append(nums)
+    idx_dict = {}
+    for num in phone_book:
+        idx = int(num[0])
+        if idx not in idx_dict.keys():
+            idx_dict[idx] = []
+        idx_dict[idx].append(num)
     
-    for k, v in hash.items():
-        if len(v) > 1:
-            for i in range(len(v)-1):
-                if v[i+1].startswith(v[i]):
+    for idx in idx_dict.keys():
+        if len(idx_dict[idx]) > 1:
+            idx_dict[idx].sort()
+            for i in range(len(idx_dict[idx]) - 1):
+                if idx_dict[idx][i+1].startswith(idx_dict[idx][i]):
                     return False
-    
+
     return True
-    
